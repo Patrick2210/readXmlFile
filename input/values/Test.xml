@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_get_free_gold">Get FREE gold if you open the game NOW!</string>
+
+    <plurals name="wishingwell_ready">
+        <item quantity="one">Your wishing well is ready!</item>
+        <item quantity="other">Your wishing wells are ready!</item>
+    </plurals>
+
+    <plurals name="reward_speedup">
+        <item quantity="one">Speed up %d time</item>
+        <item quantity="other">Speed up %d times</item>
+    </plurals>
+
+    <string name="santashouse">Santa\'s house</string>
+    <string name="smallhouse1">Small house</string>
+    <string name="smallhouse2">Small house</string>
+    <string name="mediumhouse1">Villa</string>
+    <string name="smallhouse3">Small house</string>
+    <string name="New building available!4">Small house</string>
+    <string name="mediumhouse2">Villa</string>
+    <string name="bighouse1">Big House</string>
+    <string name="mansion">Mansion</string>
+    <string name="bighouse2">Big House</string>
+    <string name="bighouse3">Big House</string>
+    <string name="bighouse4">Big House</string>
+    <string name="bighouse5">Big House </string>
+    <string name="appartment1">Apartment</string>
+    <string name="appartment2">Apartment</string>
+    <string name="skyscraper1">Skyscraper</string>
+    <string name="appartment3">Apartment</string>
+    <string name="appartment4">Apartment</string>
+    <string name="skyscraper2">Skyscraper</string>
+    <string name="appartment5">Apartment</string>
+    <string name="skyscraper3">Skyscraper</string>
+    <string name="skyscraper4">Skyscraper</string>
+    <string name="skyscraper5">Skyscraper</string>
+    <string name="skyscraper6">Skyscraper</string>
+    <string name="appartment6">Apartment</string>
+    <string name="skyscraper7">Skyscraper</string>
+</resources>
