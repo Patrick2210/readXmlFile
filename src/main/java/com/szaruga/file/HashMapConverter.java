@@ -11,7 +11,7 @@ public class HashMapConverter {
         for (Map.Entry<String, String> entry : set) {
             String key = entry.getKey();
             String value = entry.getValue();
-            String line = key + ": " + value + "\n";
+            String line = key + ": " + value;
 
             stringList.add(line);
         }

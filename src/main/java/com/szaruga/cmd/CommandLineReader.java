@@ -20,8 +20,6 @@ public class CommandLineReader {
             if (str.contains(xml)) {
                 stringList.add(str);
             }
-
-            //
         }
         return stringList;
     }
