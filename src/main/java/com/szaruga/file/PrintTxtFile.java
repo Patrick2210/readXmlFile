@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class PrintTxtFile {
-    private String path;
+    private final String path;
 
     public PrintTxtFile(String path) {
         this.path = path;

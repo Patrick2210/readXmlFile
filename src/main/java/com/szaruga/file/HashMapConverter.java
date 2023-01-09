@@ -3,11 +3,8 @@ package com.szaruga.file;
 import java.util.*;
 
 public class HashMapConverter {
-    private Map<String, String> mapProperties;
 
     public List<String> hMapConvertToList(Map<String, String> mapProperties) {
-        this.mapProperties = mapProperties;
-
         List<String> stringList = new ArrayList<>();
 
         Set<Map.Entry<String, String>> set = mapProperties.entrySet();
