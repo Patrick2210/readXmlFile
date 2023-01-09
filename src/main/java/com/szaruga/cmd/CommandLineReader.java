@@ -3,7 +3,12 @@ package com.szaruga.cmd;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO zczytac wszystkie plki od 0 do -2(przedostatniego)
+// TODO sprawdzic extension czy file zawiera czy nie
+// TODO dodoac jezeli nie zawiera extension, format chciany np. csv
+// TODO zrobic metode ktora zwroci format
+// TODO enum output obiekt - enum TXT = zawiera .txt
+// TODO "dzieciczenie" + "interface" -> poczytac
 public class CommandLineReader {
     private final String[] args;
     private static final String txt = ".txt";

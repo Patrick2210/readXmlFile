@@ -18,6 +18,7 @@ public class PrintTxtFile {
 
             for (String str : inputList) {
                 printWriter.write(str);
+                printWriter.write("\n");
             }
             printWriter.close();
 
