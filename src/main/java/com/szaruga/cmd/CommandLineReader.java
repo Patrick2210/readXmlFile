@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandLineReader {
-    private String[] args;
-    private final String txt = ".txt";
-    private final String xml = ".xml";
+    private final String[] args;
+    private static final String txt = ".txt";
+    private static final String xml = ".xml";
+    private static final String csv = ".csv";
 
     public CommandLineReader(String[] args) {
         this.args = args;
@@ -19,6 +20,8 @@ public class CommandLineReader {
             if (str.contains(xml)) {
                 stringList.add(str);
             }
+
+            //
         }
         return stringList;
     }
@@ -39,7 +42,7 @@ public class CommandLineReader {
 
         if (lastIndex == -1) {
             return fileName + txt;
-        } else if (fileName.contains(txt)) {
+        } else if (fileName.endsWith(txt)) {
             return fileName;
         }
         return fileName;

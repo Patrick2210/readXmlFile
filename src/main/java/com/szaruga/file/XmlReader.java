@@ -13,12 +13,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class XmlReader {
-    private final String nameChildElements1 = "string";
-    private final String nameChildElements2 = "plurals";
-    private final String nameSubChildElements = "item";
-    private final String nameChildAttribute1 = "name";
-    private final String nameChildAttribute2 = "quantity";
-    private String path;
+    private static final String nameChildElements1 = "string";
+    private static final String nameChildElements2 = "plurals";
+    private static final String nameSubChildElements = "item";
+    private static final String nameChildAttribute1 = "name";
+    private static final String nameChildAttribute2 = "quantity";
     private final DocumentBuilder documentBuilder;
 
     public XmlReader() {
@@ -31,7 +30,7 @@ public class XmlReader {
         }
     }
 
-    private List<Document> createDocumentList() {
+    private List<Document> createDocumentList(String path) {
         List<Document> document = new ArrayList<>();
         try {
             Document doc = documentBuilder.parse(path);
@@ -42,8 +41,7 @@ public class XmlReader {
         return document;
     }
 
-    private Map<String, String> readChildElements() {
-        List<Document> documentList = createDocumentList();
+    private Map<String, String> readChildElements(List<Document> documentList) {
         Map<String, String> mapChildElements = new HashMap<>();
 
         for (Document document : documentList) {
@@ -61,8 +59,7 @@ public class XmlReader {
         return mapChildElements;
     }
 
-    private Map<String, String> readSubChildElements() {
-        List<Document> documentList = createDocumentList();
+    private Map<String, String> readSubChildElements(List<Document> documentList) {
         Map<String, String> mapSubChildElements = new HashMap<>();
 
         for (Document document : documentList) {
@@ -94,25 +91,13 @@ public class XmlReader {
     }
 
     public Map<String, String> read(String path) {
-        this.path = path;
-        Map<String, String> mapProperties = new HashMap<>();
+        List<Document> documentList = createDocumentList(path);
 
-        Map<String, String> childElements = readChildElements();
-        Set<Map.Entry<String, String>> setChild = childElements.entrySet();
-        for (Map.Entry<String, String> strChild : setChild) {
-            String key = strChild.getKey();
-            String value = strChild.getValue();
+        Map<String, String> childElements = readChildElements(documentList);
+        Map<String, String> subElements = readSubChildElements(documentList);
+        childElements.putAll(subElements);
 
-            mapProperties.put(key, value);
-        }
-
-        Map<String, String> subChildElements = readSubChildElements();
-        Set<Map.Entry<String, String>> setSubChild = subChildElements.entrySet();
-        for (Map.Entry<String, String> strSubChild : setSubChild) {
-            String key = strSubChild.getKey();
-            String value = strSubChild.getValue();
-            mapProperties.put(key, value);
-        }
-        return mapProperties;
+        return childElements;
     }
+
 }
