@@ -10,11 +10,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class XmlReader {
-    private static final String nameChildElements1 = "string";
-    private static final String nameChildElements2 = "plurals";
-    private static final String nameSubChildElements = "item";
-    private static final String nameChildAttribute1 = "name";
-    private static final String nameChildAttribute2 = "quantity";
     private final DocumentBuilder documentBuilder;
 
     public XmlReader() {
@@ -41,14 +36,20 @@ public class XmlReader {
     private Map<String, String> readChildElements(List<Document> documentList) {
         Map<String, String> mapChildElements = new HashMap<>();
 
+        EnumStrings strings = EnumStrings.NAME_CHILD_ELEMENT_ONE;
+        EnumStrings name = EnumStrings.NAME_CHILD_ATTRIBUTE_ONE;
+
         for (Document document : documentList) {
-            NodeList nodeList = document.getElementsByTagName(nameChildElements1);
+            NodeList nodeList = document.getElementsByTagName(strings.extension);
+
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
+
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element elementChild = (Element) node;
-                    if (elementChild.getTagName().equals(nameChildElements1)) {
-                        mapChildElements.put(elementChild.getAttribute(nameChildAttribute1), elementChild.getTextContent());
+
+                    if (elementChild.getTagName().equals(strings.extension)) {
+                        mapChildElements.put(elementChild.getAttribute(name.extension), elementChild.getTextContent());
                     }
                 }
             }
@@ -59,26 +60,32 @@ public class XmlReader {
     private Map<String, String> readSubChildElements(List<Document> documentList) {
         Map<String, String> mapSubChildElements = new HashMap<>();
 
+        EnumStrings plurals = EnumStrings.NAME_CHILD_ELEMENT_TWO;
+        EnumStrings item = EnumStrings.NAME_SUB_CHILD_ELEMENT;
+        EnumStrings name = EnumStrings.NAME_CHILD_ATTRIBUTE_ONE;
+        EnumStrings quantity = EnumStrings.NAME_CHILD_ATTRIBUTE_TWO;
+
         for (Document document : documentList) {
-            NodeList nodeList = document.getElementsByTagName(nameChildElements2);
+            NodeList nodeList = document.getElementsByTagName(plurals.extension);
+            NodeList nodeListSub = document.getElementsByTagName(item.extension);
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+                Node nodeChild = nodeList.item(i);
 
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elementChild = (Element) node;
-                    NodeList nodeListSub = document.getElementsByTagName(nameSubChildElements);
+                for (int j = 0; j < nodeList.getLength(); j++) {
+                    Node nodeSub = nodeListSub.item(j);
 
-                    for (int j = 0; j < nodeList.getLength(); j++) {
-                        Node nodeSub = nodeListSub.item(j);
+                    if (nodeChild.getNodeType() == Node.ELEMENT_NODE) {
+                        Element elementChild = (Element) nodeChild;
+                        Element elementSub = (Element) nodeSub;
 
-                        if (node.getNodeType() == Node.ELEMENT_NODE) {
-                            Element elementSub = (Element) nodeSub;
+                        if (elementChild.getTagName().equals(plurals.extension) ||
+                                elementChild.getTagName().equals(item.extension)) {
 
-                            if (elementChild.getTagName().equals(nameChildElements2) || elementChild.getTagName().equals(nameSubChildElements)) {
-                                String key = elementChild.getAttribute(nameChildAttribute1) + "_" + elementSub.getAttribute(nameChildAttribute2);
-                                mapSubChildElements.put(key, elementSub.getTextContent());
-                            }
+                            String key = elementChild.getAttribute(name.extension)
+                                    + "_" + elementSub.getAttribute(quantity.extension);
+
+                            mapSubChildElements.put(key, elementSub.getTextContent());
                         }
                     }
                 }
