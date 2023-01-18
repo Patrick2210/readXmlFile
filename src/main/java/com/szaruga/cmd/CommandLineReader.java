@@ -1,8 +1,12 @@
 package com.szaruga.cmd;
 
+
+import com.szaruga.EnumStrings;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 // TODO zczytac wszystkie plki od 0 do -2(przedostatniego)
 // TODO sprawdzic extension czy file zawiera czy nie
 // TODO dodoac jezeli nie zawiera extension, format chciany np. csv
@@ -11,43 +15,88 @@ import java.util.List;
 // TODO "dzieciczenie" + "interface" -> poczytac
 public class CommandLineReader {
     private final String[] args;
-    private static final String txt = ".txt";
-    private static final String xml = ".xml";
-    private static final String csv = ".csv";
 
     public CommandLineReader(String[] args) {
         this.args = args;
     }
 
     public List<String> listFilePath() {
+        List<String> stringListFilePath = new ArrayList<>();
+        EnumStrings xml = EnumStrings.XML;
+
+        for (int i = 0; i < args.length - 2; i++) {
+            String listExceptLastTwo = args[i];
+            if (listExceptLastTwo.contains(xml.extension)) {
+                stringListFilePath.add(listExceptLastTwo);
+            }
+        }
+
+        return stringListFilePath;
+    }
+
+    private List<String> getFileName() {
         List<String> stringList = new ArrayList<>();
+        EnumStrings xml = EnumStrings.XML;
+        String fileName;
+
         for (String str : args) {
-            if (str.contains(xml)) {
-                stringList.add(str);
+
+            if (!str.endsWith(xml.extension)) {
+                File file = new File(str);
+                fileName = file.getName();
+                stringList.add(fileName);
             }
         }
         return stringList;
     }
 
-    private String getFileName() {
-        String fileName = "";
-        for (String str : args) {
+    private List<String> addExtensionTxt() {
 
-            File file = new File(str);
-            fileName = file.getName();
+        List<String> listFile = getFileName();
+        List<String> extensionList = new ArrayList<>();
+        EnumStrings txt = EnumStrings.TXT;
+
+        for (String fileName : listFile) {
+
+            if (fileName.contains(txt.extension)) {
+                extensionList.add(fileName);
+            } else if (!fileName.endsWith(txt.extension)) {
+                System.out.println("Error...");
+            }
         }
-        return fileName;
+        return extensionList;
+    }
+
+    private List<String> addExtensionCsv() {
+
+        List<String> listFile = getFileName();
+        List<String> extensionList = new ArrayList<>();
+        EnumStrings csv = EnumStrings.CSV;
+
+        for (String fileName : listFile) {
+            int lastIndex = fileName.lastIndexOf(fileName.length());
+
+            if (fileName.contains(csv.extension)) {
+                extensionList.add(fileName);
+            }
+            if (lastIndex == -1) {
+                extensionList.add(fileName + csv.extension);
+            } else if (!fileName.endsWith(csv.extension)) {
+                System.out.println("Error...");
+            }
+        }
+        return extensionList;
     }
 
     public String fileResult() {
-        String fileName = getFileName();
-        int lastIndex = fileName.lastIndexOf(".");
+        List<String> extensionTxt = addExtensionTxt();
+        List<String> extensionCsv = addExtensionCsv();
 
-        if (lastIndex == -1) {
-            return fileName + txt;
-        } else if (fileName.endsWith(txt)) {
-            return fileName;
+        String fileResultTxt = " ";
+
+        for (String str : extensionCsv) {
+            fileResultTxt = str;
         }
-        return fileName;
+        return fileResultTxt;
     }
 }
