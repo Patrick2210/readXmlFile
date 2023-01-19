@@ -5,6 +5,7 @@ import com.szaruga.EnumStrings;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CommandLineReader {
     private final String[] args;
@@ -23,7 +24,6 @@ public class CommandLineReader {
                 stringListFilePath.add(listExceptLastTwo);
             }
         }
-
         return stringListFilePath;
     }
 
@@ -43,53 +43,46 @@ public class CommandLineReader {
         return stringList;
     }
 
-    private List<String> addExtensionTxt() {
-
+    private List<String> addExtension(String extension) {
         List<String> listFile = getFileName();
         List<String> extensionList = new ArrayList<>();
-        EnumStrings txt = EnumStrings.TXT;
 
         for (String fileName : listFile) {
 
-            if (fileName.contains(txt.extension)) {
+            if (fileName.endsWith(extension)) {
                 extensionList.add(fileName);
-            } else if (!fileName.endsWith(txt.extension)) {
-                System.out.println("Error...");
+            } else if (fileName.indexOf('.') == -1) {
+                fileName += extension;
+                extensionList.add(fileName);
+            } else {
+                System.err.println(EnumStrings.ADD_EXTENSION_ERR + extension + "\n" + EnumStrings.FILE_NAME + fileName);
             }
         }
         return extensionList;
     }
 
-    private List<String> addExtensionCsv() {
+    public List<String> fileResult() throws Error {
+        Scanner scanner = new Scanner(System.in);
 
-        List<String> listFile = getFileName();
-        List<String> extensionList = new ArrayList<>();
-        EnumStrings csv = EnumStrings.CSV;
+        System.out.println(EnumStrings.WELCOME_ONE.extension);
+        System.out.println(EnumStrings.WELCOME_TWO.extension);
+        System.out.println(EnumStrings.WELCOME_THREE.extension);
 
-        for (String fileName : listFile) {
-            int lastIndex = fileName.lastIndexOf(fileName.length());
+        int number;
 
-            if (fileName.contains(csv.extension)) {
-                extensionList.add(fileName);
+        do {
+            number = scanner.nextInt();
+            if (number == 1) {
+                System.out.println(EnumStrings.IF_ONE.extension);
+                return addExtension(EnumStrings.TXT.extension);
+            } else if (number == 2) {
+                System.out.println(EnumStrings.IF_TWO.extension);
+                return addExtension(EnumStrings.CSV.extension);
+            } else {
+                System.out.println(EnumStrings.ELSE.extension);
             }
-            if (lastIndex == -1) {
-                extensionList.add(fileName + csv.extension);
-            } else if (!fileName.endsWith(csv.extension)) {
-                System.out.println("Error...");
-            }
-        }
-        return extensionList;
-    }
+        } while (number != 1 && number != 2);
 
-    public String fileResult() {
-        List<String> extensionTxt = addExtensionTxt();
-        List<String> extensionCsv = addExtensionCsv();
-
-        String fileResultTxt = " ";
-
-        for (String str : extensionCsv) {
-            fileResultTxt = str;
-        }
-        return fileResultTxt;
+        return new ArrayList<>();
     }
 }

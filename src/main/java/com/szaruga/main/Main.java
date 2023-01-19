@@ -30,7 +30,7 @@ public class Main {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 String line = key + ": " + value;
-                System.out.println(line);
+                //System.out.println(line);
             }
             printTxtFile.write(hashMapReader.hMapConvertToList(properties));
         }

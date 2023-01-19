@@ -1,5 +1,6 @@
 package com.szaruga.file;
 
+import com.szaruga.EnumStrings;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -36,11 +37,8 @@ public class XmlReader {
     private Map<String, String> readChildElements(List<Document> documentList) {
         Map<String, String> mapChildElements = new HashMap<>();
 
-        EnumStrings strings = EnumStrings.NAME_CHILD_ELEMENT_ONE;
-        EnumStrings name = EnumStrings.NAME_CHILD_ATTRIBUTE_ONE;
-
         for (Document document : documentList) {
-            NodeList nodeList = document.getElementsByTagName(strings.extension);
+            NodeList nodeList = document.getElementsByTagName(EnumStrings.STRING.extension);
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
@@ -48,8 +46,8 @@ public class XmlReader {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element elementChild = (Element) node;
 
-                    if (elementChild.getTagName().equals(strings.extension)) {
-                        mapChildElements.put(elementChild.getAttribute(name.extension), elementChild.getTextContent());
+                    if (elementChild.getTagName().equals(EnumStrings.STRING.extension)) {
+                        mapChildElements.put(elementChild.getAttribute(EnumStrings.NAME.extension), elementChild.getTextContent());
                     }
                 }
             }
@@ -60,14 +58,9 @@ public class XmlReader {
     private Map<String, String> readSubChildElements(List<Document> documentList) {
         Map<String, String> mapSubChildElements = new HashMap<>();
 
-        EnumStrings plurals = EnumStrings.NAME_CHILD_ELEMENT_TWO;
-        EnumStrings item = EnumStrings.NAME_SUB_CHILD_ELEMENT;
-        EnumStrings name = EnumStrings.NAME_CHILD_ATTRIBUTE_ONE;
-        EnumStrings quantity = EnumStrings.NAME_CHILD_ATTRIBUTE_TWO;
-
         for (Document document : documentList) {
-            NodeList nodeList = document.getElementsByTagName(plurals.extension);
-            NodeList nodeListSub = document.getElementsByTagName(item.extension);
+            NodeList nodeList = document.getElementsByTagName(EnumStrings.PLURALS.extension);
+            NodeList nodeListSub = document.getElementsByTagName(EnumStrings.ITEM.extension);
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node nodeChild = nodeList.item(i);
@@ -79,11 +72,11 @@ public class XmlReader {
                         Element elementChild = (Element) nodeChild;
                         Element elementSub = (Element) nodeSub;
 
-                        if (elementChild.getTagName().equals(plurals.extension) ||
-                                elementChild.getTagName().equals(item.extension)) {
+                        if (elementChild.getTagName().equals(EnumStrings.PLURALS.extension) ||
+                                elementChild.getTagName().equals(EnumStrings.ITEM.extension)) {
 
-                            String key = elementChild.getAttribute(name.extension)
-                                    + "_" + elementSub.getAttribute(quantity.extension);
+                            String key = elementChild.getAttribute(EnumStrings.NAME.extension)
+                                    + "_" + elementSub.getAttribute(EnumStrings.QUANTITY.extension);
 
                             mapSubChildElements.put(key, elementSub.getTextContent());
                         }
@@ -103,5 +96,4 @@ public class XmlReader {
 
         return childElements;
     }
-
 }
