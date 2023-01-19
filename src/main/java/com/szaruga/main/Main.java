@@ -24,14 +24,6 @@ public class Main {
             String path = listFilePath.get(i);
 
             Map<String, String> properties = xmlReader.read(path);
-            Set<Map.Entry<String, String>> set = properties.entrySet();
-
-            for (Map.Entry<String, String> entry : set) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                String line = key + ": " + value;
-                //System.out.println(line);
-            }
             printTxtFile.write(hashMapReader.hMapConvertToList(properties));
         }
     }
